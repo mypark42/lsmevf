@@ -1,0 +1,7 @@
+config MISC_EXAMPLE
+	bool "My example"
+
+config MISC_EXAMPLE_TEST
+	tristate "Test for my example" if !KUNIT_ALL_TESTS
+	depends on MISC_EXAMPLE && KUNIT
+	default KUNIT_ALL_TESTS
