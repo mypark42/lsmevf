@@ -1,9 +1,17 @@
-ifeq ($(STANDALONE), y)
+ifeq ($(IN_KERNEL), y)
+
+obj-$(CONFIG_MISC_EXAMPLE) += example.o
+obj-$(CONFIG_MISC_EXAMPLE_TEST) += example_test.o
+
+else
 
 NAME := lsmevf
 obj-m := $(NAME).o
 SRC := mod.c \
-       hook.c
+       hook.c \
+       dev.c \
+       buf.c \
+       event.c 
 lsmevf-y := $(SRC:.c=.o)
 
 KDIR := /lib/modules/$(shell uname -r)/build
@@ -19,8 +27,4 @@ load:
 	@echo 'module $(NAME) +p' > /sys/kernel/debug/dynamic_debug/control
 unload:
 	rmmod ./$(NAME).ko
-
-else
-obj-$(CONFIG_MISC_EXAMPLE) += example.o
-obj-$(CONFIG_MISC_EXAMPLE_TEST) += example_test.o
 endif

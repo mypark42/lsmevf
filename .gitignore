@@ -1,6 +1,7 @@
 *.o
 *.o.d
 *.ko
+*.mod
 *.mod.c
 *.symvers
 *.order
@@ -8,3 +9,4 @@ Module.symvers
 *.cmd
 *.cmd.o
 
+subscriber

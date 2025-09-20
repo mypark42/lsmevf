@@ -9,9 +9,6 @@
 int lsmevf_init(void);
 void lsmevf_exit(void);
 
-// GOAL0: read static table: [sb_mount][0..=MAX_LSM_COUNT]
-// GOAL1: 
-
 unsigned long (*lsmevf_kallsyms_name)(const char *) = NULL;
 
 static int kallsyms_init(void)
@@ -36,6 +33,8 @@ void lsmevf_exit(void)
 	pr_debug("%s\n", __func__);
 
 	lsmevf_hook_exit();
+	lsmevf_bufpool_exit();
+	lsmevf_dev_exit();
 
 	return;
 }
@@ -57,13 +56,16 @@ int lsmevf_init(void)
 		goto out;
 	}
 
+	lsmevf_bufpool_init();
+
 	err = lsmevf_hook_init();
 	if (err) {
 		pr_err("lsmevf_hook_init");
+		lsmevf_bufpool_exit();
+		lsmevf_dev_exit();
 		goto out;
 	}
 
-	
 	pr_info("lsmevf initialized!\n");
 out:
 	return err;
