@@ -3,6 +3,7 @@
 
 #include <linux/module.h>
 #include <linux/lsm_hooks.h>
+#include <linux/list.h>
 #include <uapi/linux/lsm.h>
 #include "lsmevf_def.h"
 

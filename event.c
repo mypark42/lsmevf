@@ -54,7 +54,7 @@ int notify_event(union event *ev)
 
 	struct databuf *dbuf = get_one_databuf(5 * HZ);
 	if (IS_ERR(dbuf)) {
-		pr_err("get_one_session");
+		pr_err("get_one_databuf");
 		return 0;
 	}
 
